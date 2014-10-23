@@ -23,18 +23,16 @@
 --
 
 function toFraction(startx, maxdenominator)
+    -- Double vars from C
+    local x = startx
+    -- Long vars from C
+    local ai = math.floor(x)
+    local result = {}
+
     local m = {} -- multidimentional array of longs
     for i = 1,2 do
         m[i] = {} -- Create 2 rows.
     end
-
-    -- Double vars from C
-    local x
-
-    -- Long vars from C
-    local ai
-
-    x = startx
 
     -- initialize matrix
     m[1][1] = 1
@@ -42,8 +40,7 @@ function toFraction(startx, maxdenominator)
     m[2][1] = 0
     m[2][2] = 1
 
-    -- loop finding terms until denom gets too big
-    ai = math.floor(x)
+    -- loop finding terms until denominator gets too big
     while (m[2][1] * ai + m[2][2] <= maxdenominator) do
         local t -- long
         t = m[1][1] * ai + m[1][2]
