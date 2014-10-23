@@ -59,15 +59,17 @@ function toFraction(startx, maxdenominator)
     -- now remaining x is between 0 and 1/ai
     -- approx as either 0 or 1/m where m is max that will fit in maxdenominator
     -- first try zero
-    io.write(string.format("%d/%d, error = %e\n", m[1][1], m[2][1],
-           startx - (m[1][1] / m[2][1])))
+    local error = startx - (m[1][1] / m[2][1])
+    table.insert(result, { m[1][1], m[2][1], error })
 
     -- now try other possibility
     ai = (maxdenominator - m[2][2]) / m[2][1]
     m[1][1] = m[1][1] * ai + m[1][2]
     m[2][1] = m[2][1] * ai + m[2][2]
-    io.write(string.format("%d/%d, error = %e\n", m[1][1], m[2][1],
-           startx - (m[1][1] / m[2][1])))
+    error = startx - (m[1][1] / m[2][1])
+    table.insert(result, { m[1][1], m[2][1], error })
+
+    return result
 end
 
 -- read command line arguments
@@ -76,5 +78,7 @@ if (#arg ~= 2) then
     os.exit(1)
 end
 
-toFraction(tonumber(arg[1]), math.floor(tonumber(arg[2])))
-
+local fracs = toFraction(tonumber(arg[1]), math.floor(tonumber(arg[2])))
+io.write("Results:\n")
+io.write(string.format("  (1) %5d/%-5d    error %13e\n", fracs[1][1], fracs[1][2], fracs[1][3]))
+io.write(string.format("  (2) %5d/%-5d    error %13e\n", fracs[2][1], fracs[2][2], fracs[2][3]))
