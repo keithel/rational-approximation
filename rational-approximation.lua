@@ -22,9 +22,9 @@
 -- we just keep the last partial product of these matrices.
 --
 
-function toFraction(startx, maxdenominator)
+function toFraction(startValue, maxdenominator)
     -- Double vars from C
-    local x = startx
+    local x = startValue
     -- Long vars from C
     local ai = math.floor(x)
     local result = {}
@@ -59,14 +59,14 @@ function toFraction(startx, maxdenominator)
     -- now remaining x is between 0 and 1/ai
     -- approx as either 0 or 1/m where m is max that will fit in maxdenominator
     -- first try zero
-    local error = startx - (m[1][1] / m[2][1])
+    local error = startValue - (m[1][1] / m[2][1])
     table.insert(result, { m[1][1], m[2][1], error })
 
     -- now try other possibility
     ai = (maxdenominator - m[2][2]) / m[2][1]
     m[1][1] = m[1][1] * ai + m[1][2]
     m[2][1] = m[2][1] * ai + m[2][2]
-    error = startx - (m[1][1] / m[2][1])
+    error = startValue - (m[1][1] / m[2][1])
     table.insert(result, { m[1][1], m[2][1], error })
 
     return result
