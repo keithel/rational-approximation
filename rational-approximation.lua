@@ -22,7 +22,7 @@
 -- we just keep the last partial product of these matrices.
 --
 
-function toFraction(startValue, maxdenominator)
+function realToFraction(startValue, maxdenominator)
     -- Double vars from C
     local x = startValue
     -- Long vars from C
